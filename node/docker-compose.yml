@@ -1,0 +1,25 @@
+version: "2.4"
+services:
+  node:
+    build: .
+    environment:
+      ADNL_PORT:
+      CONSOLE_PORT:
+    volumes:
+      - type: volume
+        source: node-config
+        target: /etc/ton
+      - type: volume
+        source: node-data
+        target: /node_db
+    ports:
+      - "${ADNL_PORT}:${ADNL_PORT}/udp"
+      - "${CONSOLE_PORT}:${CONSOLE_PORT}"
+    mem_limit: "${MEM_LIMIT}"
+    memswap_limit: "${MEM_LIMIT}" # disables swap usage
+    restart: always
+
+volumes:
+  node-config:
+  node-data:
+
