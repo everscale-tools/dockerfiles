@@ -3,8 +3,9 @@ FROM rust:1.60.0-bullseye
 ARG GITHUB_REPO=https://github.com/tonlabs/ton-labs-node-tools.git
 ARG GITHUB_COMMIT_ID=master
 
-RUN apt-get update && apt-get install -y libssl-dev clang \
-    && git clone --recurse-submodules ${GITHUB_REPO} ton-labs-node-tools \
+RUN apt-get update && apt-get install -y libzstd-dev libssl-dev clang
+ENV ZSTD_LIB_DIR=/usr/lib/x86_64-linux-gnu
+RUN git clone --recurse-submodules ${GITHUB_REPO} ton-labs-node-tools \
     && cd ton-labs-node-tools \
     && git checkout ${GITHUB_COMMIT_ID} \
     && cargo build --release --bins
