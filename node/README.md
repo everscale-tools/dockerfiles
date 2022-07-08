@@ -13,15 +13,15 @@ There are few variables to set up &mdash; see [.env](.env) for details.
 
 Build and deploy via single command:
 ```console
-$ docker-compose up -d --build
+$ docker-compose up -d --build --build-arg GC_TON_NODE=<github commit id> node
 ```
 
 Re-build the node from scrach:
 ```console
-$ docker-compose build --no-cache node
+$ docker-compose build --no-cache --build-arg GC_TON_NODE=<github commit id> node
 ```
 
-Re-start the node only:
+Re-start the node:
 ```console
 $ docker-compose up -d --force-recreate --no-deps node
 ```
