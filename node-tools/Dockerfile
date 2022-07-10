@@ -1,4 +1,4 @@
-FROM rust:1.60.0-bullseye
+FROM rust:1.61.0-bullseye
 
 ARG GITHUB_REPO=https://github.com/tonlabs/ton-labs-node-tools.git
 ARG GITHUB_COMMIT_ID=master
