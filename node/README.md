@@ -6,24 +6,19 @@ Everything about deployment here is pretty straightforward:
 
 Docker's multi-stage build is being utilized to make resulting image small in size.
 Sources are pulled from `master` branch by default.
-There's a code-modification trick being applied to allow the `console` CLI tool to connect to the node remotely (see the [Dockerfile](./node/Dockerfile) for details).
+There's a code-modification trick being applied to allow the `console` CLI tool to connect to the node remotely (see the [Dockerfile](./Dockerfile) for details).
 
 Deployment assumes Docker Compose usage.
 There are few variables to set up &mdash; see [.env](.env) for details.
 
-Build and deploy via single command:
-```console
-$ docker-compose up -d --build --build-arg GC_TON_NODE=<github commit id> node
-```
-
-Re-build the node from scrach:
+Firstly, build:
 ```console
 $ docker-compose build --no-cache --build-arg GC_TON_NODE=<github commit id> node
 ```
 
-Re-start the node:
+Then deploy:
 ```console
-$ docker-compose up -d --force-recreate --no-deps node
+$ docker-compose up --detach --force-recreate node
 ```
 
 When the node starts syncing, you'll be able to see the progress via the command below:
