@@ -1,6 +1,6 @@
 ARG GC_TON_NODE=master
 
-FROM rust:1.61.0-bullseye
+FROM rust:1.66.0-bullseye
 
 ARG GC_TON_NODE
 
