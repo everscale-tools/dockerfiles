@@ -12,7 +12,7 @@ mkdir -p "$CONFIGS_DIR" "$LOGS_DIR"
 function configure() {
     DEFAULT_CONFIG_JSON=$(mktemp)
     jq --argjson cport "$CONSOLE_PORT" --arg ipaddr "$(printf '0.0.0.0:%u' "$ADNL_PORT")" \
-        '.control_server_port = $cport | .ip_address = $ipaddr' \
+        '.control_server_port = $cport | .ip_address = $ipaddr | .gc = {"enable_for_archives": true, "enable_for_shard_state_persistent": true}' \
         "$CONFIGS_DIR/default_config.json" > "$DEFAULT_CONFIG_JSON" \
         && mv "$DEFAULT_CONFIG_JSON" "$CONFIGS_DIR/default_config.json"
 
@@ -59,4 +59,3 @@ function run() {
 }
 
 configure && run
-
