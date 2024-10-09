@@ -1,13 +1,13 @@
-FROM rust:1.76-bookworm
+FROM rust:1.81-bookworm
 
 ARG EVER_CLI_REPO_REF=master
 
-RUN git clone --recurse-submodules https://github.com/tonlabs/ever-cli.git \
+RUN git clone --recurse-submodules https://github.com/everx-labs/ever-cli.git \
     && cd ever-cli \
     && git checkout $EVER_CLI_REPO_REF -b build \
     && cargo build --release
 
-RUN git clone https://github.com/tonlabs/ton-labs-contracts.git
+RUN git clone https://github.com/everx-labs/ton-labs-contracts.git
 
 FROM debian:bookworm-slim
 
@@ -17,9 +17,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /usr/lib/ever-cli
 
-ENV TONOSCLI_CONFIG=/usr/lib/ever-cli/tonos-cli.conf.json
+ENV EVERCLI_CONFIG=/usr/lib/ever-cli/ever-cli.conf.json
 
-COPY --from=0 /ever-cli/target/release/tonos-cli /usr/local/bin/
+COPY --from=0 /ever-cli/target/release/ever-cli /usr/local/bin/
 COPY --from=0 \
     /ton-labs-contracts/solidity/safemultisig/SafeMultisigWallet.abi.json \
     /ton-labs-contracts/solidity/safemultisig/SafeMultisigWallet.tvc \
@@ -33,5 +33,5 @@ COPY --from=0 \
     /ton-labs-contracts/solidity/depool/DePoolProxy.tvc \
     ./
 
-ENTRYPOINT ["tonos-cli"]
+ENTRYPOINT ["ever-cli"]
 
